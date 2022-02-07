@@ -1,0 +1,25 @@
+{
+  "products": [
+    {
+      "id": "a53",
+      "name": "A53",
+      "price": 4500000,
+      "category": "موبایل",
+      "availability": 21
+    },
+    {
+      "id": "a54",
+      "name": "A54",
+      "price": 7500000,
+      "category": "موبایل",
+      "availability": 33
+    },
+    {
+      "id": "a56",
+      "name": "A56",
+      "price": 1500000,
+      "category": "موبایل",
+      "availability": 25
+    }
+  ]
+}
