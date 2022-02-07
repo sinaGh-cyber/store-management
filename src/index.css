@@ -1,1 +1,4 @@
 @import-normalize;
+* {
+  box-sizing: border-box;
+}
