@@ -1,10 +1,14 @@
 import './App.css';
+import Navbar from './components/navBar/navBar';
+import Footer from './components/footer/footer';
+import Main from './components/main/main';
+
 
 function App() {
   return (<>
-  {/* <NavBar/> */}
-  {/* <Main/> */}
-  {/* <Footer/> */}
+  <Navbar/>
+  <Main/>
+  <Footer/>
   </>);
 }
 
