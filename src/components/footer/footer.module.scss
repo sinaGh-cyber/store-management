@@ -1,0 +1,10 @@
+@use '../utility/styles/colors.scss';
+.footerTag {
+  height: 20vh;
+  width: 98%;
+  border: none;
+  border-top: solid 2px #ab47bc;
+  margin-top: 0.5rem;
+  border-radius: 10px;
+  background-color: colors.$purple-100;
+}
