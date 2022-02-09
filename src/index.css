@@ -42,3 +42,9 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(218, 143, 31);
 }
+
+/* Fonts */
+@font-face {
+  font-family: 'Raleway-semiBoldItalic';
+  src: url('./components/utility/fonts/Raleway-SemiBoldItalic.otf') format('opentype');
+}

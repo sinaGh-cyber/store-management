@@ -1,7 +1,10 @@
 @use '../utility/styles/colors.scss';
+
+
+
 .footerTag {
   width: 100%;
-  height: 20vH;
+  height: 20vh;
   border: none;
   border-top: solid 2px #ab47bc;
   margin-top: 0.5rem;
@@ -71,4 +74,5 @@
 p {
   margin: 0 auto 0 0;
   font-size: x-large;
+  font-family: 'Raleway-SemiBoldItalic';
 }

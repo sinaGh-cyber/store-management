@@ -17,7 +17,7 @@ const Footer = () => {
           <p>
             inspired by{' '}
             <a href="https://github.com/sahebmohammadi">Saheb Mohammadi</a>'s
-            React & Redux curse.
+            React &#38; Redux curse.
           </p>{' '}
         </section>
         <ul className={style.ulTag}>
