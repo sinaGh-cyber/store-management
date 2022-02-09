@@ -1,7 +1,19 @@
 @use '../utility/styles/colors.scss';
 
 .mainTag {
-  margin-top: 0.5rem;
-  border-radius: 10px;
+  margin-top: 1px;
   background-color: colors.$purple-50;
+  width: 100%;
+  min-height: 72.5vh;
+
+  @media (min-height: 900px) {
+    & {
+      min-height: 75vh;
+    }
+  }
+  @media (min-height: 1000px) {
+    & {
+      min-height: 79vh;
+    }
+  }
 }

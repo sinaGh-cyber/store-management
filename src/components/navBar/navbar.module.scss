@@ -1,9 +1,8 @@
-
 .navTag {
   background-color: #e1bee7;
   border: none;
   border-bottom: solid 2px #ab47bc;
-  border-radius: 10px;
+  // border-radius: 10px;
   width: 100%;
 
   display: flex;
@@ -11,16 +10,12 @@
   align-items: center;
 }
 
-
-
 .buttonGroup {
   width: 35%;
 
-
-  .toggleThemeMode{
+  .toggleThemeMode {
     position: relative;
     height: 100%;
-
   }
   .NavbarRefreshBtn {
     font-size: xx-large;
@@ -29,4 +24,8 @@
 
 .headerTag {
   width: 55%;
+}
+
+nav:parent {
+  background-color: #000 !important;
 }
