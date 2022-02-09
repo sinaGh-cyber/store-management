@@ -20,23 +20,27 @@ const Footer = () => {
             React &#38; Redux curse.
           </p>{' '}
         </section>
+
         <ul className={style.ulTag}>
           <li className={style.liTag}>
             <a href="https://www.instagram.com/sina_gh1999">
               <AiFillInstagram />
             </a>{' '}
           </li>
+
           <li className={style.liTag}>
             <a href="https://github.com/sinaGh-cyber">
               <AiFillGithub />
             </a>{' '}
           </li>
+
           <li className={style.liTag}>
             {' '}
             <a href="mailto:mohammad.sina.gholami.cyber@gmail.com">
               <AiFillMail />
             </a>{' '}
           </li>
+
           <li className={style.liTag}>
             {' '}
             <a href="https://www.linkedin.com/in/mohammad-sina-gholami-632489214/">
