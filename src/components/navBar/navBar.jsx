@@ -1,5 +1,9 @@
 import style from './navbar.module.scss';
-import toggleThemeMode from './navbar.toggleThemeMode.module.scss';
+
+import { FiRefreshCw } from 'react-icons/fi';
+import { AiFillBulb } from 'react-icons/ai';
+import { AiOutlineBulb } from 'react-icons/ai';
+
 
 const Navbar = () => {
   return (
@@ -7,18 +11,12 @@ const Navbar = () => {
       <header className={style.headerTag}></header>
 
       <section className={style.buttonGroup}>
-        <button className={style.NavbarRefreshBtn}></button>
+        <button className={style.NavbarRefreshBtn}>
+          {' '}
+          <FiRefreshCw id={style.FiRefreshCw} />{' '}
+        </button>
 
-        <div className={style.toggleThemeMode}>
-          <div
-            className={`${toggleThemeMode.button} ${toggleThemeMode.r}`}
-            id={toggleThemeMode.button1}
-          >
-            <input type="checkbox" className={toggleThemeMode.checkbox} />
-            <div className={toggleThemeMode.knobs}></div>
-            <div className={toggleThemeMode.layer}></div>
-          </div>
-        </div>
+        <button className={style.toggleThemeMode}></button>
       </section>
     </nav>
   );
