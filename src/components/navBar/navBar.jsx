@@ -25,8 +25,10 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={style.navTag}>
-      <header className={style.headerTag}></header>
+    <nav className={`${style.navTag} ${isDark ? style.bgDark : style.bgLight}`}>
+      <header className={style.headerTag}>
+        PRODUCT MANAGEMENT 
+      </header>
 
       <section className={style.buttonGroup}>
         <button className={style.NavbarRefreshBtn}>
@@ -36,7 +38,7 @@ const Navbar = () => {
 
         <button
           onClick={OnToggleThemeModeBtnClickHandler}
-          className={style.toggleThemeMode}
+          className={style.toggleThemeModeBtn}
         >
           {isDark ? <AiFillBulb /> : <AiOutlineBulb />}
         </button>
