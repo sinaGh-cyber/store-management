@@ -42,14 +42,15 @@
 
   .buttonGroup {
     button {
-      background-color: colors.$grey-600;
+      background-color: transparent;
+      color: colors.$grey-500;
 
       &:hover {
-        background-color: colors.$grey-500;
+        color: colors.$grey-400;
       }
 
       &:active {
-        background-color: colors.$grey-400;
+        color: colors.$grey-300;
       }
     }
   }
@@ -57,18 +58,19 @@
 
 .navTag.bgLight {
   background-color: colors.$purple-100;
-  border-color: colors.$purple-400;
+  color: colors.$deep-purple-800;
 
   .buttonGroup {
     button {
-      background-color: colors.$purple-100;
+      background-color: transparent;
+      color: colors.$deep-purple-800;
 
       &:hover {
-        background-color: colors.$purple-200;
+        color: colors.$deep-purple-700;
       }
 
       &:active {
-        background-color: colors.$purple-300;
+        color: colors.$deep-purple-600;
       }
     }
   }

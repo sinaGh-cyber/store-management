@@ -38,7 +38,7 @@ const Navbar = () => {
           onClick={OnToggleThemeModeBtnClickHandler}
           className={style.toggleThemeModeBtn}
         >
-          {isDark ? <AiFillBulb /> : <AiOutlineBulb />}
+          {isDark ? <AiOutlineBulb /> : <AiFillBulb />}
         </button>
       </section>
     </nav>
