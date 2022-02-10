@@ -1,19 +1,24 @@
 @use '../utility/styles/colors.scss';
 
-
-
 .footerTag {
   width: 100%;
   height: 20vh;
   border: none;
-  border-top: solid 2px #ab47bc;
   margin-top: 1px;
-  // border-radius: 10px;
-  background-color: colors.$purple-100;
-
   display: flex;
   justify-content: center;
   align-items: center;
+
+  transition: all 0.3s ease;
+
+  .description {
+    p {
+      a {
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+    }
+  }
 
   @media (max-width: 800px) {
     & {
@@ -50,13 +55,13 @@
 
   .liTag {
     a {
-      color: colors.$deep-purple-600;
+      transition: all 0.3s ease;
 
       &:hover {
-        color: colors.$deep-purple-500;
+        transition: all 0.3s ease;
       }
       &:active {
-        color: colors.$deep-purple-400;
+        transition: all 0.3s ease;
       }
     }
   }
@@ -70,9 +75,74 @@
   justify-content: center;
   align-items: center;
   font-size: large;
+  transition: all 0.3s ease;
 }
 p {
   margin: 0 auto 0 0;
   font-size: x-large;
   font-family: 'Raleway-SemiBoldItalic';
+  transition: all 0.3s ease;
+}
+
+.footerTag.bgLight {
+  background-color: colors.$purple-100;
+  border-top: solid 2px colors.$purple-400;
+
+  .description {
+    color: colors.$deep-purple-500;
+    p {
+      a {
+        color: colors.$deep-purple-800;
+        transition: all 0.3s ease;
+      }
+    }
+  }
+
+  .ulTag {
+    .liTag {
+      a {
+        color: colors.$deep-purple-600;
+
+        &:hover {
+          color: colors.$deep-purple-500;
+        }
+
+        &:active {
+          color: colors.$deep-purple-400;
+        }
+      }
+    }
+  }
+}
+
+.footerTag.bgDark {
+  background-color: colors.$grey-900;
+  border-top: solid 5px colors.$grey-600;
+
+  .description {
+    color: colors.$grey-500;
+
+    p {
+      a {
+        color: colors.$grey-300;
+        transition: all 0.3s ease;
+      }
+    }
+  }
+
+  .ulTag {
+    .liTag {
+      a {
+        color: colors.$grey-500;
+
+        &:hover {
+          color: colors.$grey-300;
+        }
+
+        &:active {
+          color: colors.$grey-100;
+        }
+      }
+    }
+  }
 }

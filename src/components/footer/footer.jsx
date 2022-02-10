@@ -1,13 +1,35 @@
 import style from './footer.module.scss';
+
 import { AiFillMail } from 'react-icons/ai';
 import { AiOutlineLinkedin } from 'react-icons/ai';
 import { AiFillInstagram } from 'react-icons/ai';
 import { AiFillGithub } from 'react-icons/ai';
 
+import {
+  useThemeMode,
+  posableThemeModes,
+} from '../../context/themeModeProvider';
+import { useState, useEffect } from 'react';
+
 const Footer = () => {
+  const { themeMode, themeModeToggler } = useThemeMode();
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    if (themeMode === posableThemeModes.DARK) {
+      setIsDark(true);
+    } else {
+      setIsDark(false);
+    }
+  }, [themeMode]);
+
   return (
     <>
-      <footer className={style.footerTag}>
+      <footer
+        className={`${style.footerTag} ${
+          isDark ? style.bgDark : style.bgLight
+        }`}
+      >
         <section className={style.description}>
           {' '}
           <p>
