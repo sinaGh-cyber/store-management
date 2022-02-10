@@ -26,9 +26,7 @@ const Navbar = () => {
 
   return (
     <nav className={`${style.navTag} ${isDark ? style.bgDark : style.bgLight}`}>
-      <header className={style.headerTag}>
-        PRODUCT MANAGEMENT 
-      </header>
+      <header className={style.headerTag}>Product Management</header>
 
       <section className={style.buttonGroup}>
         <button className={style.NavbarRefreshBtn}>
