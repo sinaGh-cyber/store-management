@@ -4,7 +4,7 @@
   border: none;
   border-bottom: solid 2px;
   width: 100%;
-
+  position: fixed;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -33,6 +33,7 @@
 }
 
 .navTag.bgDark {
+  border-bottom: solid 5px;
   background-color: colors.$grey-900;
   border-color: colors.$grey-600;
 
