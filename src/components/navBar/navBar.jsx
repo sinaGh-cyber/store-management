@@ -6,16 +6,23 @@ import { posableThemeModes } from '../../context/themeModeProvider';
 import { FiRefreshCw } from 'react-icons/fi';
 import { AiFillBulb } from 'react-icons/ai';
 import { AiOutlineBulb } from 'react-icons/ai';
-import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
 
 const Navbar = () => {
-
-  const {themeMode, themeModeToggler} = useThemeMode();
+  const { themeMode, themeModeToggler } = useThemeMode();
   const [isDark, setIsDark] = useState(false);
 
-  
-  if(themeMode === posableThemeModes.DARK) setIsDark(true);
+  useEffect(() => {
+    if (themeMode === posableThemeModes.DARK) {
+      setIsDark(true);
+    } else {
+      setIsDark(false);
+    }
+  }, [themeMode]);
+
+  const OnToggleThemeModeBtnClickHandler = () => {
+    themeModeToggler();
+  };
 
   return (
     <nav className={style.navTag}>
@@ -27,7 +34,12 @@ const Navbar = () => {
           <FiRefreshCw id={style.FiRefreshCw} />{' '}
         </button>
 
-        <button className={style.toggleThemeMode}></button>
+        <button
+          onClick={OnToggleThemeModeBtnClickHandler}
+          className={style.toggleThemeMode}
+        >
+          {isDark ? <AiFillBulb /> : <AiOutlineBulb />}
+        </button>
       </section>
     </nav>
   );
