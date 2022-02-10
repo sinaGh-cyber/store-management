@@ -12,7 +12,7 @@ import {
 import { useState, useEffect } from 'react';
 
 const Footer = () => {
-  const { themeMode, themeModeToggler } = useThemeMode();
+  const { themeMode } = useThemeMode();
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
