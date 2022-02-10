@@ -47,11 +47,11 @@
       color: colors.$grey-500;
 
       &:hover {
-        color: colors.$grey-400;
+        color: colors.$grey-300;
       }
 
       &:active {
-        color: colors.$grey-300;
+        color: colors.$grey-100;
       }
     }
   }
@@ -67,11 +67,11 @@
       color: colors.$deep-purple-800;
 
       &:hover {
-        color: colors.$deep-purple-700;
+        color: colors.$deep-purple-600;
       }
 
       &:active {
-        color: colors.$deep-purple-600;
+        color: colors.$deep-purple-400;
       }
     }
   }
