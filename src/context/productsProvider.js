@@ -1,22 +1,22 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useReducer,
-  useState,
-} from 'react';
+import { createContext, useContext, useReducer } from 'react';
 import { getAllProductsAPI } from '../services/api/index';
 
 const productsContext = createContext(undefined);
 const productsContextDispatcher = createContext(undefined);
 
+let prevProducts;
+
 const reduce = async (stat, { type, id }) => {
-  if (type === 'refresh') {
-    let products = await getAllProductsAPI();
-    products = await products.data;
-    return products;
-  } else {
-    return { result: 'there is no product in list' };
+  switch (type) {
+    case 'refresh': {
+      let products = await getAllProductsAPI();
+      products = await products.data;
+      prevProducts = [...products];
+      return products;
+    }
+    default: {
+      return { result: 'there is no product in list' };
+    }
   }
 };
 const initData = {};
