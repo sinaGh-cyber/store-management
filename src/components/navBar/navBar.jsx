@@ -8,9 +8,19 @@ import { AiFillBulb } from 'react-icons/ai';
 import { AiOutlineBulb } from 'react-icons/ai';
 import { useEffect, useState } from 'react';
 
+import {
+  useProductsActions,
+  useProductsStat,
+} from '../../context/productsProvider';
+
 const Navbar = () => {
   const { themeMode, themeModeToggler } = useThemeMode();
   const [isDark, setIsDark] = useState(false);
+
+  const products = useProductsStat();
+  const dispatch = useProductsActions();
+
+  console.log(products);
 
   useEffect(() => {
     if (themeMode === posableThemeModes.DARK) {
@@ -29,7 +39,12 @@ const Navbar = () => {
       <header className={style.headerTag}>Product Management</header>
 
       <section className={style.buttonGroup}>
-        <button className={style.NavbarRefreshBtn}>
+        <button
+          className={style.NavbarRefreshBtn}
+          onClick={() => {
+            dispatch({ type: 'refresh' });
+          }}
+        >
           {' '}
           <FiRefreshCw id={style.FiRefreshCw} />{' '}
         </button>
