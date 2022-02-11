@@ -41,9 +41,7 @@ const Navbar = () => {
       <section className={style.buttonGroup}>
         <button
           className={style.NavbarRefreshBtn}
-          onClick={() => {
-            dispatch({ type: 'refresh' });
-          }}
+          onClick={() => dispatch({ type: 'refresh' })}
         >
           {' '}
           <FiRefreshCw id={style.FiRefreshCw} />{' '}
