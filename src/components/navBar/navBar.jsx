@@ -20,7 +20,6 @@ const Navbar = () => {
   const products = useProductsStat();
   const dispatch = useProductsActions();
 
-  console.log(products);
 
   useEffect(() => {
     if (themeMode === posableThemeModes.DARK) {
