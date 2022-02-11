@@ -10,14 +10,12 @@ import { useEffect, useState } from 'react';
 
 import {
   useProductsActions,
-  useProductsStat,
 } from '../../context/productsProvider';
 
 const Navbar = () => {
   const { themeMode, themeModeToggler } = useThemeMode();
   const [isDark, setIsDark] = useState(false);
 
-  const products = useProductsStat();
   const dispatch = useProductsActions();
 
 
