@@ -4,14 +4,14 @@ import { getAllProductsAPI } from '../services/api/index';
 const productsContext = createContext(undefined);
 const productsContextDispatcher = createContext(undefined);
 
-let prevProducts;
+let availableProducts;
 
 const reduce = async (stat, { type, id }) => {
   switch (type) {
     case 'refresh': {
       let products = await getAllProductsAPI();
       products = await products.data;
-      prevProducts = [...products];
+      availableProducts = [...products];
       return products;
     }
     default: {
