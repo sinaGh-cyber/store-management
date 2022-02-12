@@ -1,4 +1,10 @@
-import { createContext, useContext, useReducer } from 'react';
+import {
+  createContext,
+  useContext,
+  useReducer,
+  useState,
+  useEffect,
+} from 'react';
 import { getAllProductsAPI } from '../services/api/index';
 
 const productsContext = createContext(undefined);
@@ -23,9 +29,20 @@ const initData = 0;
 
 const ProductsProvider = ({ children }) => {
   const [products, dispatch] = useReducer(reduce, initData);
+  const [extractedProductsArray, setExtractedProductsArray] = useState(false);
+
+  useEffect(() => {
+    products &&
+      products.then((data) => {
+        const Array = data.map((product) => {
+          return product;
+        });
+        setExtractedProductsArray(Array);
+      });
+  }, [products]);
 
   return (
-    <productsContext.Provider value={products}>
+    <productsContext.Provider value={extractedProductsArray}>
       <productsContextDispatcher.Provider value={dispatch}>
         {children}
       </productsContextDispatcher.Provider>
