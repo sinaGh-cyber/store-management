@@ -15,7 +15,7 @@ const reduce = async (stat, { type, id }) => {
       return products;
     }
     default: {
-      return { result: 'there is no product in list' };
+      throw Error('there is no product in list');
     }
   }
 };
