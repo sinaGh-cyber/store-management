@@ -19,7 +19,7 @@ const reduce = async (stat, { type, id }) => {
     }
   }
 };
-const initData = {};
+const initData = 0;
 
 const ProductsProvider = ({ children }) => {
   const [products, dispatch] = useReducer(reduce, initData);
@@ -35,13 +35,13 @@ const ProductsProvider = ({ children }) => {
 
 const useProductsStat = () => {
   const provider = useContext(productsContext);
-  if (provider) return provider;
+  if (provider !== undefined) return provider;
   throw Error('ProductsProvider Context issue');
 };
 
 const useProductsActions = () => {
   const provider = useContext(productsContextDispatcher);
-  if (provider) return provider;
+  if (provider !== undefined) return provider;
   throw Error('productsContextDispatcher issue');
 };
 
