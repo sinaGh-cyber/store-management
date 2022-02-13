@@ -1,7 +1,8 @@
 import './App.scss';
 import Navbar from './components/navbar/navbar';
 import Footer from './components/footer/footer';
-import Main from './components/main/main';
+import Filter from './components/filter/filter';
+import ProductsList from './components/productsList/productsList';
 
 import ThemeModeProvider from './context/themeModeProvider';
 import ProductsProvider from './context/productsProvider';
@@ -12,7 +13,8 @@ function App() {
       <ProductsProvider>
         <ThemeModeProvider>
           <Navbar />
-          <Main />
+          <Filter/>
+          <ProductsList/>
           <Footer />
         </ThemeModeProvider>
       </ProductsProvider>
