@@ -5,13 +5,17 @@ import { posableThemeModes } from '../../context/themeModeProvider';
 
 import { useEffect, useState } from 'react';
 
-import { useProductsActions } from '../../context/productsProvider';
+import {
+  useProductsActions,
+  useProductsStat,
+} from '../../context/productsProvider';
 
 const ProductsList = () => {
   const { themeMode } = useThemeMode();
   const [isDark, setIsDark] = useState(false);
 
   const dispatch = useProductsActions();
+  const products = useProductsStat();
 
   useEffect(() => {
     if (themeMode === posableThemeModes.DARK) {
@@ -21,13 +25,22 @@ const ProductsList = () => {
     }
   }, [themeMode]);
 
+  useEffect(() => {
+    dispatch({ type: 'refresh' });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <section
         className={`${style.productsList} ${
           isDark ? style.bgDark : style.bgLight
         }`}
-      ></section>
+      >
+        {!products.length && (
+          <div className={style.noProducts}>go to shoppings</div>
+        )}
+      </section>
     </>
   );
 };
