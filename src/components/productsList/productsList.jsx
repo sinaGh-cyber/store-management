@@ -11,7 +11,7 @@ import {
 } from '../../context/productsProvider';
 
 const ProductsList = () => {
-    // Theme mode Stat management
+    // Theme mode State management
   const { themeMode } = useThemeMode();
   const [isDark, setIsDark] = useState(false);
   useEffect(() => {
@@ -22,7 +22,7 @@ const ProductsList = () => {
     }
   }, [themeMode]);
 
-//   products Stat management
+//   products State management
   const dispatch = useProductsActions();
   const products = useProductsStat();
 
