@@ -13,7 +13,7 @@ import {
 } from '../../context/productsProvider';
 
 const ProductsList = () => {
-    // Theme mode State management
+  // Theme mode State management
   const { themeMode } = useThemeMode();
   const [isDark, setIsDark] = useState(false);
   useEffect(() => {
@@ -24,7 +24,7 @@ const ProductsList = () => {
     }
   }, [themeMode]);
 
-//   products State management
+  //   products State management
   const dispatch = useProductsActions();
   const products = useProductsStat();
 
@@ -40,12 +40,19 @@ const ProductsList = () => {
           isDark ? style.bgDark : style.bgLight
         }`}
       >
+        {products.length && (
+          <div className={style.ListLength}>All: {products.length}</div>
+        )}
+
         {!products.length && (
           <div className={style.noProducts}>go to shoppings</div>
         )}
-        {products.length && products.map(product=>{
-           return <Product key={product.id} isDark={isDark} product={product}  />
-        })}
+        {products.length &&
+          products.map((product) => {
+            return (
+              <Product key={product.id} isDark={isDark} product={product} />
+            );
+          })}
       </section>
     </>
   );
