@@ -8,6 +8,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex: 0 1 auto;
 
   transition: all 0.3s ease;
   .ulTag {
@@ -79,7 +80,7 @@
 
 // Light mode
 .footerTag.bgLight {
-  background-color: colors.$purple-100;
+  background-color: colors.$purple-200;
   border-top: solid 2px colors.$purple-400;
 
   .description {
