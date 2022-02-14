@@ -3,6 +3,8 @@ import style from './productsList.module.scss';
 import { useThemeMode } from '../../context/themeModeProvider';
 import { posableThemeModes } from '../../context/themeModeProvider';
 
+import Product from '../product/product';
+
 import { useEffect, useState } from 'react';
 
 import {
@@ -41,6 +43,9 @@ const ProductsList = () => {
         {!products.length && (
           <div className={style.noProducts}>go to shoppings</div>
         )}
+        {products.length && products.map(product=>{
+           return <Product key={product.id} isDark={isDark} product={product}  />
+        })}
       </section>
     </>
   );
