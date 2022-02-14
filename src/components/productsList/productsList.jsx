@@ -11,12 +11,9 @@ import {
 } from '../../context/productsProvider';
 
 const ProductsList = () => {
+    // Theme mode Stat management
   const { themeMode } = useThemeMode();
   const [isDark, setIsDark] = useState(false);
-
-  const dispatch = useProductsActions();
-  const products = useProductsStat();
-
   useEffect(() => {
     if (themeMode === posableThemeModes.DARK) {
       setIsDark(true);
@@ -25,9 +22,13 @@ const ProductsList = () => {
     }
   }, [themeMode]);
 
+//   products Stat management
+  const dispatch = useProductsActions();
+  const products = useProductsStat();
+
   useEffect(() => {
     dispatch({ type: 'refresh' });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
