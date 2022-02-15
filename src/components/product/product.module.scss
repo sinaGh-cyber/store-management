@@ -201,7 +201,7 @@
 // Dark mode
 .product.bgDark {
   border: colors.$grey-300 2px solid;
-  background-color: #000;
+  background-color: colors.$grey-1000;
   color: colors.$grey-300;
 
   .productInfo {
