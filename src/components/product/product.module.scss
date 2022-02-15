@@ -59,12 +59,12 @@
       height: auto;
     }
     .productInfo {
-      height: 140px;
+      height: auto;
       width: 100%;
-      flex-direction: column;
-      justify-content: space-evenly;
-      align-items: center;
-      text-align: center;
+      //   flex-direction: column;
+      justify-content: space-around;
+      //   align-items: center;
+      //   text-align: center;
       margin-left: 5px;
 
       .productName {
@@ -96,6 +96,9 @@
     .productInfo {
       height: auto;
       min-height: 160px;
+      align-items: center;
+      text-align: center;
+      flex-direction: column;
     }
 
     .productManagement {
