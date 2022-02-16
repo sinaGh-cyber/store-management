@@ -7,17 +7,22 @@ import { AiFillDelete } from 'react-icons/ai';
 import { useProductsActions } from '../../context/productsProvider';
 
 const Product = ({ isDark, product }) => {
-  const onDecreaseBtnClickHandler = (e) => {
+  const dispatch = useProductsActions();
+  // handlers
+  const onDecreaseBtnClickHandler = () => {
     if (product.quantity > 1) {
-      e.target.disable = true;
-      setTimeout(() => (e.target.disable = false), 300);
       dispatch({ type: 'decrease', id: product.id });
     } else if (product.quantity === 1) {
       dispatch({ type: 'delete', id: product.id });
     }
   };
+  const onIncreaseBtnClickHandler = () => {
+    dispatch({ type: 'increase', id: product.id });
+  };
 
-  const dispatch = useProductsActions();
+  const onDeleteBtnClickHandler = () => {
+    dispatch({ type: 'delete', id: product.id });
+  };
 
   return (
     <div
@@ -31,20 +36,20 @@ const Product = ({ isDark, product }) => {
 
       <div className={style.productManagement}>
         <button
-          onClick={(e) => {
-            onDecreaseBtnClickHandler(e);
-          }}
+          onClick={onDecreaseBtnClickHandler}
           className={`${style.decrease} ${
             product.quantity <= 1 ? style.toBeDeleted : null
           }`}
         >
           {product.quantity > 1 ? <AiOutlineMinus /> : <AiFillDelete />}
         </button>
-        <button className={style.increase}>
+        <button onClick={onIncreaseBtnClickHandler} className={style.increase}>
           {' '}
           <AiOutlinePlus />{' '}
         </button>
-        <button className={style.delete}>Delete</button>
+        <button onClick={onDeleteBtnClickHandler} className={style.delete}>
+          Delete
+        </button>
       </div>
     </div>
   );
