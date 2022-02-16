@@ -11,11 +11,10 @@ import { useEffect, useState } from 'react';
 import { useProductsActions } from '../../context/productsProvider';
 
 const Navbar = () => {
+
+  //Theme mode
   const { themeMode, themeModeToggler } = useThemeMode();
   const [isDark, setIsDark] = useState(false);
-
-  const dispatch = useProductsActions();
-
   useEffect(() => {
     if (themeMode === posableThemeModes.DARK) {
       setIsDark(true);
@@ -23,6 +22,11 @@ const Navbar = () => {
       setIsDark(false);
     }
   }, [themeMode]);
+
+  // products context
+  const dispatch = useProductsActions();
+
+  // handlers
 
   const OnToggleThemeModeBtnClickHandler = () => {
     themeModeToggler();
