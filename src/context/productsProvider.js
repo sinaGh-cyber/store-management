@@ -31,18 +31,41 @@ const reduce = async (stat, { type, id }) => {
       }
     }
 
-    case 'decrease': {
+    case 'increase': {
       let res;
+      const currentProductIndex = availableProducts.findIndex(
+        (product) => product.id === id
+      );
       try {
-        availableProducts[id - 1].quantity--;
-        res = await putProductApi(id, availableProducts[id - 1]);
+        availableProducts[currentProductIndex].quantity++;
+        res = await putProductApi(id, availableProducts[currentProductIndex]);
       } catch (err) {
         throw err;
       } finally {
         if (res.status < 300 && res.status > 199) {
           return availableProducts;
         } else {
-          availableProducts[id - 1].quantity++;
+          availableProducts[currentProductIndex].quantity--;
+          return stat;
+        }
+      }
+    }
+    case 'decrease': {
+      let res;
+      const currentProductIndex = availableProducts.findIndex(
+        (product) => product.id === id
+      );
+      try {
+        availableProducts[currentProductIndex].quantity--;
+        res = await putProductApi(id, availableProducts[currentProductIndex]);
+      } catch (err) {
+        throw err;
+      } finally {
+        if (res.status < 300 && res.status > 199) {
+          return availableProducts;
+        } else {
+          availableProducts[currentProductIndex].quantity++;
+
           return stat;
         }
       }
