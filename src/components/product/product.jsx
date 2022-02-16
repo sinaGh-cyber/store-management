@@ -7,9 +7,15 @@ import { AiFillDelete } from 'react-icons/ai';
 import { useProductsActions } from '../../context/productsProvider';
 
 const Product = ({ isDark, product }) => {
-  // conditional inline styling for decreaseBtn
-  const decreaseBtnStyle =
-    product.quantity > 1 && !isDark ? {} : { color: 'red' };
+  const onDecreaseBtnClickHandler = (e) => {
+    if (product.quantity > 1) {
+      e.target.disable = true;
+      setTimeout(() => (e.target.disable = false), 300);
+      dispatch({ type: 'decrease', id: product.id });
+    } else if (product.quantity === 1) {
+      dispatch({ type: 'delete', id: product.id });
+    }
+  };
 
   const dispatch = useProductsActions();
 
@@ -22,8 +28,12 @@ const Product = ({ isDark, product }) => {
         <p className={style.productPrice}>price: {product.price}</p>
         <span className={style.productQuantity}>{product.quantity}</span>
       </div>
+
       <div className={style.productManagement}>
         <button
+          onClick={(e) => {
+            onDecreaseBtnClickHandler(e);
+          }}
           className={`${style.decrease} ${
             product.quantity <= 1 ? style.toBeDeleted : null
           }`}
