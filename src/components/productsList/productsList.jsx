@@ -40,14 +40,14 @@ const ProductsList = () => {
           isDark ? style.bgDark : style.bgLight
         }`}
       >
-        {products.length && (
+        {!!products.length && (
           <div className={style.ListLength}>All: {products.length}</div>
         )}
 
         {!products.length && (
           <div className={style.noProducts}>go to shoppings</div>
         )}
-        {products.length &&
+        {!!products.length &&
           products.map((product) => {
             return (
               <Product key={product.id} isDark={isDark} product={product} />
