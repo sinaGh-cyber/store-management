@@ -14,7 +14,7 @@ import {
 const productsContext = createContext(undefined);
 const productsContextDispatcher = createContext(undefined);
 
-let availableProducts = [];
+let productsClone = [];
 
 const reduce = async (stat, { type, id }) => {
   switch (type) {
@@ -23,7 +23,7 @@ const reduce = async (stat, { type, id }) => {
       try {
         receivedProducts = await getAllProductsAPI();
         receivedProducts = await receivedProducts.data;
-        availableProducts = [...receivedProducts];
+        productsClone = [...receivedProducts];
       } catch (err) {
         throw err;
       } finally {
@@ -33,38 +33,38 @@ const reduce = async (stat, { type, id }) => {
 
     case 'increase': {
       let res;
-      const currentProductIndex = availableProducts.findIndex(
+      const currentProductIndex = productsClone.findIndex(
         (product) => product.id === id
       );
       try {
-        availableProducts[currentProductIndex].quantity++;
-        res = await putProductApi(id, availableProducts[currentProductIndex]);
+        productsClone[currentProductIndex].quantity++;
+        res = await putProductApi(id, productsClone[currentProductIndex]);
       } catch (err) {
         throw err;
       } finally {
         if (res.status < 300 && res.status > 199) {
-          return availableProducts;
+          return productsClone;
         } else {
-          availableProducts[currentProductIndex].quantity--;
+          productsClone[currentProductIndex].quantity--;
           return stat;
         }
       }
     }
     case 'decrease': {
       let res;
-      const currentProductIndex = availableProducts.findIndex(
+      const currentProductIndex = productsClone.findIndex(
         (product) => product.id === id
       );
       try {
-        availableProducts[currentProductIndex].quantity--;
-        res = await putProductApi(id, availableProducts[currentProductIndex]);
+        productsClone[currentProductIndex].quantity--;
+        res = await putProductApi(id, productsClone[currentProductIndex]);
       } catch (err) {
         throw err;
       } finally {
         if (res.status < 300 && res.status > 199) {
-          return availableProducts;
+          return productsClone;
         } else {
-          availableProducts[currentProductIndex].quantity++;
+          productsClone[currentProductIndex].quantity++;
 
           return stat;
         }
@@ -75,14 +75,14 @@ const reduce = async (stat, { type, id }) => {
         const res = await deleteProductApi(id);
 
         if (res.status < 300 && res.status > 199) {
-          availableProducts = availableProducts.filter(
+          productsClone = productsClone.filter(
             (product) => product.id !== id
           );
         }
       } catch (err) {
         throw err;
       } finally {
-        return availableProducts;
+        return productsClone;
       }
     }
     default: {
