@@ -12,9 +12,9 @@ import {
 import { useState, useEffect } from 'react';
 
 const Footer = () => {
+  // theme mode
   const { themeMode } = useThemeMode();
   const [isDark, setIsDark] = useState(false);
-
   useEffect(() => {
     if (themeMode === posableThemeModes.DARK) {
       setIsDark(true);
