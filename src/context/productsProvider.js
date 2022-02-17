@@ -14,102 +14,111 @@ import {
 const productsContext = createContext(undefined);
 const productsContextDispatcher = createContext(undefined);
 
-let productsClone = [];
-
-const reduce = async (stat, { type, id }) => {
+// this reducer could be just return data in any case but for future scalability I wrote it in this why.
+const reduce = (stat, { type, id, data }) => {
   switch (type) {
-    case 'refresh': {
-      let receivedProducts;
-      try {
-        receivedProducts = await getAllProductsAPI();
-        receivedProducts = await receivedProducts.data;
-        productsClone = [...receivedProducts];
-      } catch (err) {
-        throw err;
-      } finally {
-        return receivedProducts;
-      }
-    }
+    case 'refresh':
+      return data;
 
-    case 'increase': {
-      let res;
-      const currentProductIndex = productsClone.findIndex(
-        (product) => product.id === id
-      );
-      try {
-        productsClone[currentProductIndex].quantity++;
-        res = await putProductApi(id, productsClone[currentProductIndex]);
-      } catch (err) {
-        throw err;
-      } finally {
-        if (res.status < 300 && res.status > 199) {
-          return productsClone;
-        } else {
-          productsClone[currentProductIndex].quantity--;
-          return stat;
-        }
-      }
-    }
-    case 'decrease': {
-      let res;
-      const currentProductIndex = productsClone.findIndex(
-        (product) => product.id === id
-      );
-      try {
-        productsClone[currentProductIndex].quantity--;
-        res = await putProductApi(id, productsClone[currentProductIndex]);
-      } catch (err) {
-        throw err;
-      } finally {
-        if (res.status < 300 && res.status > 199) {
-          return productsClone;
-        } else {
-          productsClone[currentProductIndex].quantity++;
+    case 'increase':
+      return data;
 
-          return stat;
-        }
-      }
-    }
-    case 'delete': {
-      try {
-        const res = await deleteProductApi(id);
+    case 'decrease':
+      return data;
 
-        if (res.status < 300 && res.status > 199) {
-          productsClone = productsClone.filter(
-            (product) => product.id !== id
-          );
-        }
-      } catch (err) {
-        throw err;
-      } finally {
-        return productsClone;
-      }
-    }
+    case 'delete':
+      return data;
+
     default: {
-      throw Error('there is no product in list');
+      throw Error('unknown action in reducer');
     }
   }
 };
 
 const ProductsProvider = ({ children }) => {
-  const initData = new Promise((resolve) => {
-    resolve([]);
-  });
+  const initData = [];
   const [products, dispatch] = useReducer(reduce, initData);
-  const [extractedProductsArray, setExtractedProductsArray] = useState([]);
 
-  useEffect(() => {
-    products.then((data) => {
-      const Array = data.map((product) => {
-        return product;
-      });
-      setExtractedProductsArray(Array);
-    });
-  }, [products]);
+  const asyncDispatch = ({ type, id }) => {
+    switch (type) {
+      case 'refresh': {
+        getAllProductsAPI()
+          .then((res) => {
+            dispatch({ type: type, data: res.data });
+          })
+          .catch((err) => {
+            throw err;
+          });
+        return;
+      }
+      case 'increase': {
+        const currentProductIndex = products.findIndex(
+          (product) => product.id === id
+        );
+        const currentProductClone = { ...products[currentProductIndex] };
+        currentProductClone.quantity++;
+        putProductApi(id, currentProductClone)
+          .then((res) => {
+            if (res.status < 300 && res.status > 199) {
+              const productsClone = [...products];
+              productsClone[currentProductIndex].quantity++;
+
+              dispatch({ type: type, data: productsClone });
+            }
+          })
+          .catch((err) => {
+            throw err;
+          });
+
+        return;
+      }
+
+      case 'decrease': {
+        const currentProductIndex = products.findIndex(
+          (product) => product.id === id
+        );
+        const currentProductClone = { ...products[currentProductIndex] };
+        currentProductClone.quantity--;
+        putProductApi(id, currentProductClone)
+          .then((res) => {
+            if (res.status < 300 && res.status > 199) {
+              const productsClone = [...products];
+              productsClone[currentProductIndex].quantity--;
+
+              dispatch({ type: type, data: productsClone });
+            }
+          })
+          .catch((err) => {
+            throw err;
+          });
+
+        return;
+      }
+
+      case 'delete': {
+        deleteProductApi(id)
+          .then((res) => {
+            if (res.status < 300 && res.status > 199) {
+              const newProductsArray = products.filter((product) => {
+                return product.id !== id;
+              });
+              dispatch({ type, data: newProductsArray });
+            }
+          })
+          .catch((error) => {
+            throw error;
+          });
+        return;
+      }
+      default: {
+        throw Error('unknown action in asyncDispatch');
+      }
+    }
+  };
 
   return (
-    <productsContext.Provider value={extractedProductsArray}>
-      <productsContextDispatcher.Provider value={dispatch}>
+    <productsContext.Provider value={products}>
+      <productsContextDispatcher.Provider value={asyncDispatch}>
         {children}
       </productsContextDispatcher.Provider>
     </productsContext.Provider>
