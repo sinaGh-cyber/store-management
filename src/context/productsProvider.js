@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useReducer,
-  useState,
-  useEffect,
-} from 'react';
+import { createContext, useContext, useReducer } from 'react';
 import {
   getAllProductsAPI,
   putProductApi,
@@ -51,6 +45,7 @@ const ProductsProvider = ({ children }) => {
           });
         return;
       }
+
       case 'increase': {
         const currentProductIndex = products.findIndex(
           (product) => product.id === id
@@ -110,6 +105,7 @@ const ProductsProvider = ({ children }) => {
           });
         return;
       }
+
       default: {
         throw Error('unknown action in asyncDispatch');
       }
@@ -127,13 +123,13 @@ const ProductsProvider = ({ children }) => {
 
 const useProductsStat = () => {
   const provider = useContext(productsContext);
-  if (provider !== undefined) return provider;
+  if (provider) return provider;
   throw Error('ProductsProvider Context issue');
 };
 
 const useProductsActions = () => {
   const provider = useContext(productsContextDispatcher);
-  if (provider !== undefined) return provider;
+  if (provider) return provider;
   throw Error('productsContextDispatcher issue');
 };
 
