@@ -1,0 +1,46 @@
+@use '../utility/styles/colors.scss';
+.productsList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex: 1 1 auto;
+  width: 100%;
+
+  .ListLength {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    margin: 10px 0;
+    font-family: 'Raleway-SemiBoldItalic';
+    font-size: xx-large;
+
+    span {
+      padding: 10px 19px;
+      border-radius: 50%;
+      margin-left: 20px;
+    }
+  }
+}
+
+.productsList.bgLight {
+  background-color: colors.$purple-100;
+  .ListLength {
+    span {
+      background-color: colors.$deep-purple-200;
+    }
+  }
+}
+
+.productsList.bgDark {
+  background-color: colors.$grey-800;
+  color: colors.$grey-500;
+  .ListLength {
+    span {
+      background-color: colors.$grey-600;
+      color: colors.$grey-300;
+    }
+  }
+}

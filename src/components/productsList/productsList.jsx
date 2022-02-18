@@ -41,7 +41,9 @@ const ProductsList = () => {
         }`}
       >
         {!!products.length && (
-          <div className={style.ListLength}>All: {products.length}</div>
+          <div className={style.ListLength}>
+            All: <span>{products.length}</span>{' '}
+          </div>
         )}
 
         {!products.length && (
