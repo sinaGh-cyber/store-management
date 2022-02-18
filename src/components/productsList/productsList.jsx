@@ -4,7 +4,7 @@ import WithTheme from '../../hoc/withTheme/withTheme';
 
 import Product from '../product/product';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import {
   useProductsActions,
