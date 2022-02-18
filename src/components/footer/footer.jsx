@@ -1,28 +1,13 @@
 import style from './footer.module.scss';
 
+import WithTheme from '../../hoc/withTheme/withTheme';
+
 import { AiFillMail } from 'react-icons/ai';
 import { AiOutlineLinkedin } from 'react-icons/ai';
 import { AiFillInstagram } from 'react-icons/ai';
 import { AiFillGithub } from 'react-icons/ai';
 
-import {
-  useThemeMode,
-  posableThemeModes,
-} from '../../context/themeModeProvider';
-import { useState, useEffect } from 'react';
-
-const Footer = () => {
-  // theme mode
-  const { themeMode } = useThemeMode();
-  const [isDark, setIsDark] = useState(false);
-  useEffect(() => {
-    if (themeMode === posableThemeModes.DARK) {
-      setIsDark(true);
-    } else {
-      setIsDark(false);
-    }
-  }, [themeMode]);
-
+const Footer = ({ isDark }) => {
   return (
     <>
       <footer
@@ -75,4 +60,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default WithTheme(Footer);

@@ -1,5 +1,7 @@
 import style from './product.module.scss';
 
+import WithTheme from '../../hoc/withTheme/withTheme';
+
 import { AiOutlinePlus } from 'react-icons/ai';
 import { AiOutlineMinus } from 'react-icons/ai';
 import { AiFillDelete } from 'react-icons/ai';
@@ -55,4 +57,4 @@ const Product = ({ isDark, product }) => {
   );
 };
 
-export default Product;
+export default WithTheme(Product);

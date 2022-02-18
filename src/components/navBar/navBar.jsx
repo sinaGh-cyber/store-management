@@ -1,28 +1,14 @@
 import style from './navbar.module.scss';
 
-import { useThemeMode } from '../../context/themeModeProvider';
-import { posableThemeModes } from '../../context/themeModeProvider';
+import WithTheme from '../../hoc/withTheme/withTheme';
 
 import { FiRefreshCw } from 'react-icons/fi';
 import { AiFillBulb } from 'react-icons/ai';
 import { AiOutlineBulb } from 'react-icons/ai';
-import { useEffect, useState } from 'react';
 
 import { useProductsActions } from '../../context/productsProvider';
 
-const Navbar = () => {
-
-  //Theme mode
-  const { themeMode, themeModeToggler } = useThemeMode();
-  const [isDark, setIsDark] = useState(false);
-  useEffect(() => {
-    if (themeMode === posableThemeModes.DARK) {
-      setIsDark(true);
-    } else {
-      setIsDark(false);
-    }
-  }, [themeMode]);
-
+const Navbar = ({ isDark, themeModeToggler }) => {
   // products context
   const dispatch = useProductsActions();
 
@@ -58,4 +44,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default WithTheme(Navbar);

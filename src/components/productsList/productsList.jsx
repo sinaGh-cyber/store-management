@@ -1,7 +1,6 @@
 import style from './productsList.module.scss';
 
-import { useThemeMode } from '../../context/themeModeProvider';
-import { posableThemeModes } from '../../context/themeModeProvider';
+import WithTheme from '../../hoc/withTheme/withTheme';
 
 import Product from '../product/product';
 
@@ -12,17 +11,7 @@ import {
   useProductsStat,
 } from '../../context/productsProvider';
 
-const ProductsList = () => {
-  // Theme mode State management
-  const { themeMode } = useThemeMode();
-  const [isDark, setIsDark] = useState(false);
-  useEffect(() => {
-    if (themeMode === posableThemeModes.DARK) {
-      setIsDark(true);
-    } else {
-      setIsDark(false);
-    }
-  }, [themeMode]);
+const ProductsList = ({isDark}) => {
 
   //   products State management
   const dispatch = useProductsActions();
@@ -52,7 +41,7 @@ const ProductsList = () => {
         {!!products.length &&
           products.map((product) => {
             return (
-              <Product key={product.id} isDark={isDark} product={product} />
+              <Product key={product.id} product={product} />
             );
           })}
       </section>
@@ -60,4 +49,4 @@ const ProductsList = () => {
   );
 };
 
-export default ProductsList;
+export default WithTheme(ProductsList);
