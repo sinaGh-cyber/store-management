@@ -6,6 +6,8 @@ import Select from 'react-select';
 const SelectComponent = ({ isDark, ...Rest }) => {
   const currentTheme = isDark
     ? {
+        primary: '#eeeeee',
+        neutral80: '#eeeeee',
         neutral0: '#757575',
         neutral20: '#bdbdbd',
         neutral30: '#eeeeee',
