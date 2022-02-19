@@ -29,17 +29,17 @@ const ProductsList = ({isDark}) => {
           isDark ? style.bgDark : style.bgLight
         }`}
       >
-        {!!products.length && (
+        {!!products[products.currentMode].length && (
           <div className={style.ListLength}>
-            All: <span>{products.length}</span>{' '}
+            All: <span>{products[products.currentMode].length}</span>{' '}
           </div>
         )}
 
-        {!products.length && (
+        {!products[products.currentMode].length && (
           <div className={style.noProducts}>go to shoppings</div>
         )}
-        {!!products.length &&
-          products.map((product) => {
+        {!!products[products.currentMode].length &&
+          products[products.currentMode].map((product) => {
             return (
               <Product key={product.id} product={product} />
             );
