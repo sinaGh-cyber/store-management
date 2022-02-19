@@ -21,11 +21,7 @@ const SelectComponent = ({ isDark, ...Rest }) => {
       };
 
   return (
-    <div
-      className={`${style.selectWarper} ${
-        isDark ? style.bgDark : style.bgLight
-      }`}
-    >
+    <div className={style.selectWarper}>
       <Select
         {...Rest}
         theme={(theme) => ({
@@ -36,7 +32,6 @@ const SelectComponent = ({ isDark, ...Rest }) => {
             ...currentTheme,
           },
         })}
-        classNamePrefix={style.selectPrefix}
         className={style.Select}
       />
     </div>
