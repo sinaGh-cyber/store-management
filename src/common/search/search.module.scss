@@ -1,0 +1,57 @@
+@use '../../components/utility/styles/colors.scss';
+
+.searchWarper {
+  height: 100%;
+  width: 45%;
+  .searchInput {
+    height: 38px;
+    border-radius: 5px;
+    width: 100%;
+    font-family: 'Raleway-SemiBoldItalic';
+    font-size: medium;
+    padding: 0 0 0 8px;
+  }
+
+  @media (max-width: 620px) {
+    & {
+      width: 95%;
+      margin: 5px 0;
+    }
+  }
+}
+.searchWarper.bgLight {
+  .searchInput {
+    background-color: colors.$purple-50;
+    // color: colors.$grey-300;
+    border: solid 1px colors.$purple-700;
+    &::-webkit-input-placeholder {
+      color: colors.$grey-800;
+      opacity: 1;
+      font-size: medium;
+    }
+    &:focus {
+      border: none;
+      outline-color: rgb(0, 153, 255);
+      outline-style: solid;
+      outline-width: 2px;
+    }
+  }
+}
+
+.searchWarper.bgDark {
+  .searchInput {
+    background-color: colors.$grey-600;
+    color: colors.$grey-300;
+    border: solid 1px colors.$grey-200;
+    &::-webkit-input-placeholder {
+      color: colors.$grey-300;
+      opacity: 1;
+      font-size: medium;
+    }
+    &:focus {
+      outline-color: colors.$grey-200;
+      outline-style: solid;
+      outline-width: 1px;
+    }
+  }
+}
