@@ -4,6 +4,7 @@ import {
   putProductApi,
   deleteProductApi,
 } from '../services/api/index';
+import _ from 'lodash';
 
 const productsContext = createContext(undefined);
 const productsContextDispatcher = createContext(undefined);
@@ -23,6 +24,15 @@ const reduce = (stat, { type, id, data }) => {
     case 'delete':
       return data;
 
+    case 'filter':
+      return data;
+
+    case 'sort':
+      return data;
+
+    case 'search':
+      return data;
+
     default: {
       throw Error('unknown action in reducer');
     }
@@ -30,33 +40,59 @@ const reduce = (stat, { type, id, data }) => {
 };
 
 const ProductsProvider = ({ children }) => {
-  const initData = [];
+  const initData = {
+    filtered: [],
+    unfiltered: [],
+    searched: [],
+    currentMode: 'unfiltered',
+  };
   const [products, dispatch] = useReducer(reduce, initData);
 
-  const asyncDispatch = ({ type, id }) => {
+  const asyncDispatch = ({ type, id, data }) => {
     switch (type) {
       case 'refresh': {
         getAllProductsAPI()
           .then((res) => {
-            dispatch({ type: type, data: res.data });
+            const productsClone = { ...products };
+            productsClone.unfiltered = res.data;
+            productsClone.filtered = res.data;
+            productsClone.searched = res.data;
+            productsClone.currentMode = 'unfiltered';
+            dispatch({ type: type, data: productsClone });
           })
           .catch((err) => {
             throw err;
           });
-        return;
+        return true;
       }
 
       case 'increase': {
-        const currentProductIndex = products.findIndex(
+        const productsClone = { ...products };
+        const currentUnfilteredProductIndex =
+          productsClone.unfiltered.findIndex((product) => product.id === id);
+
+        const currentSearchedProductIndex = productsClone.searched.findIndex(
           (product) => product.id === id
         );
-        const currentProductClone = { ...products[currentProductIndex] };
+
+        const currentFilteredProductIndex = productsClone.filtered.findIndex(
+          (product) => product.id === id
+        );
+        const currentProductClone = {
+          ...productsClone.unfiltered[currentUnfilteredProductIndex],
+        };
         currentProductClone.quantity++;
         putProductApi(id, currentProductClone)
           .then((res) => {
             if (res.status < 300 && res.status > 199) {
-              const productsClone = [...products];
-              productsClone[currentProductIndex].quantity++;
+              productsClone.unfiltered[currentUnfilteredProductIndex] =
+                currentProductClone;
+
+              productsClone.filtered[currentFilteredProductIndex] =
+                currentProductClone;
+
+              productsClone.searched[currentSearchedProductIndex] =
+                currentProductClone;
 
               dispatch({ type: type, data: productsClone });
             }
@@ -65,21 +101,34 @@ const ProductsProvider = ({ children }) => {
             throw err;
           });
 
-        return;
+        return true;
       }
 
       case 'decrease': {
-        const currentProductIndex = products.findIndex(
+        const productsClone = { ...products };
+        const currentUnfilteredProductIndex =
+          productsClone.unfiltered.findIndex((product) => product.id === id);
+
+        const currentSearchedProductIndex = productsClone.searched.findIndex(
           (product) => product.id === id
         );
-        const currentProductClone = { ...products[currentProductIndex] };
+
+        const currentFilteredProductIndex = productsClone.filtered.findIndex(
+          (product) => product.id === id
+        );
+        const currentProductClone = {
+          ...productsClone.unfiltered[currentUnfilteredProductIndex],
+        };
         currentProductClone.quantity--;
         putProductApi(id, currentProductClone)
           .then((res) => {
             if (res.status < 300 && res.status > 199) {
-              const productsClone = [...products];
-              productsClone[currentProductIndex].quantity--;
-
+              productsClone.unfiltered[currentUnfilteredProductIndex] =
+                currentProductClone;
+              productsClone.filtered[currentFilteredProductIndex] =
+                currentProductClone;
+              productsClone.searched[currentSearchedProductIndex] =
+                currentProductClone;
               dispatch({ type: type, data: productsClone });
             }
           })
@@ -87,23 +136,146 @@ const ProductsProvider = ({ children }) => {
             throw err;
           });
 
-        return;
+        return true;
       }
 
       case 'delete': {
+        const productsClone = { ...products };
         deleteProductApi(id)
           .then((res) => {
             if (res.status < 300 && res.status > 199) {
-              const newProductsArray = products.filter((product) => {
-                return product.id !== id;
-              });
-              dispatch({ type, data: newProductsArray });
+              const newUnfilteredProductsArray = products.unfiltered.filter(
+                (product) => {
+                  return product.id !== id;
+                }
+              );
+              const newFilteredProductsArray = products.filtered.filter(
+                (product) => {
+                  return product.id !== id;
+                }
+              );
+              const newSearchedProductsArray = products.searched.filter(
+                (product) => {
+                  return product.id !== id;
+                }
+              );
+
+              productsClone.unfiltered = newUnfilteredProductsArray;
+              productsClone.filtered = newFilteredProductsArray;
+              productsClone.searched = newSearchedProductsArray;
+              dispatch({ type, data: productsClone });
             }
           })
           .catch((error) => {
             throw error;
           });
-        return;
+        return true;
+      }
+
+      case 'filter': {
+        const productsClone = { ...products };
+        productsClone.filtered = products.unfiltered;
+        if (!data.filterVal) {
+          productsClone.currentMode = 'unfiltered';
+        } else {
+          productsClone.currentMode = 'filtered';
+          productsClone.filtered = productsClone.unfiltered.filter(
+            (product) => {
+              return product.availableSizes.indexOf(data.filterVal) !== -1;
+            }
+          );
+        }
+
+        if (data.sortVal === 'lowest') {
+          productsClone.unfiltered = _.orderBy(
+            productsClone.unfiltered,
+            ['price'],
+            ['asc']
+          );
+          productsClone.filtered = _.orderBy(
+            productsClone.filtered,
+            ['price'],
+            ['asc']
+          );
+          productsClone.searched = _.orderBy(
+            productsClone.searched,
+            ['price'],
+            ['asc']
+          );
+        } else {
+          productsClone.unfiltered = _.orderBy(
+            productsClone.unfiltered,
+            ['price'],
+            ['desc']
+          );
+          productsClone.filtered = _.orderBy(
+            productsClone.filtered,
+            ['price'],
+            ['desc']
+          );
+          productsClone.searched = _.orderBy(
+            productsClone.searched,
+            ['price'],
+            ['desc']
+          );
+        }
+
+        dispatch({ type, data: productsClone });
+
+        return true;
+      }
+      case 'sort': {
+        let productsClone = { ...products };
+        if (data === 'lowest') {
+          productsClone.unfiltered = _.orderBy(
+            productsClone.unfiltered,
+            ['price'],
+            ['asc']
+          );
+          productsClone.filtered = _.orderBy(
+            productsClone.filtered,
+            ['price'],
+            ['asc']
+          );
+          productsClone.searched = _.orderBy(
+            productsClone.searched,
+            ['price'],
+            ['asc']
+          );
+        } else {
+          productsClone.unfiltered = _.orderBy(
+            productsClone.unfiltered,
+            ['price'],
+            ['desc']
+          );
+          productsClone.filtered = _.orderBy(
+            productsClone.filtered,
+            ['price'],
+            ['desc']
+          );
+          productsClone.searched = _.orderBy(
+            productsClone.searched,
+            ['price'],
+            ['desc']
+          );
+        }
+        dispatch({ type, data: productsClone });
+        return true;
+      }
+
+      case 'search': {
+        const productsClone = { ...products };
+        if (data === '') {
+          return true;
+        } else {
+          const filteredProducts = products.filtered.filter((product) =>
+            product.title.toLowerCase().includes(data.toLowerCase())
+          );
+          productsClone.searched = filteredProducts;
+          productsClone.currentMode = 'searched';
+          dispatch({ type, data: productsClone });
+          return true;
+        }
       }
 
       default: {
@@ -111,7 +283,6 @@ const ProductsProvider = ({ children }) => {
       }
     }
   };
-
   return (
     <productsContext.Provider value={products}>
       <productsContextDispatcher.Provider value={asyncDispatch}>
