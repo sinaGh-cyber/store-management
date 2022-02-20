@@ -1,0 +1,38 @@
+@use '../utility/styles/colors.scss';
+
+.filters {
+  width: 100%;
+  padding: 10px 0;
+  display: flex;
+  flex: 0 1 auto;
+  justify-content: center;
+  align-items: center;
+
+  .filtersWarper {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  @media (max-width: 950px) {
+    .filtersWarper {
+      width: 95%;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .filtersWarper {
+      width: 100%;
+      flex-direction: column;
+    }
+  }
+}
+
+.filters.bgLight {
+  background-color: colors.$purple-100;
+}
+
+.filters.bgDark {
+  background-color: colors.$grey-800;
+}
